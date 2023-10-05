@@ -1,3 +1,12 @@
+.tweet-form{
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  gap: 2px;
+}
+
+
 .tweet{
   background-color: aqua;
   border: 2px solid cornflowerblue;
