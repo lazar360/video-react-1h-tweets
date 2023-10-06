@@ -30,12 +30,41 @@ function App() {
     setTweets(curr => curr.filter(tweet => tweet.id !== tweetId));
   }
 
+  const addTweet = (tweet) => {
+    setTweets([...tweets, tweet])
+  } 
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    const newTweet = {
+      id: (typeof tweets !== 'undefined' && tweets.length !== 0 ? tweets[tweets.length - 1].id + 1 : 0),
+      name: (event.target.name.value),
+      content: (event.target.content.value),
+      like:0
+    }
+
+    addTweet(newTweet);
+  }
+
+  const onLike = (tweetId) => {
+      setTweets((curr) => {
+        
+        const copyTweet = [...curr];
+
+        const likedTweet = copyTweet.find((tweet)=> tweet.id === tweetId);
+        likedTweet.like +=1;
+        
+        return copyTweet;
+      })
+  }
+
   return (
     <div>
-      <form className="tweet-form">
+      <form onSubmit={handleSubmit} className="tweet-form">
         <h4>New tweet</h4>
-        <input type="text" name="name"/>
-        <input type="content" name="content"/>
+        <input placeholder="name" type="text" name="name"/>
+        <input placeholder="content" type="content" name="content"/>
         <input type="submit"/>
         
       </form>
@@ -50,6 +79,7 @@ function App() {
               content={tweet.content}
               like={tweet.like}
               onDelete={(id) => onDelete(id) }
+              onLike={(id) => {onLike(id)}}
               />
             )
           }
